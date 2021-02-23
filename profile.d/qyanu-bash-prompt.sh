@@ -11,8 +11,8 @@ __prompt_command() {
     [ $cde -gt 0 ] && str="\[${RED}\]${str}"
     str="${str}\[${NONE}\]"
     if [ "`id -u`" -eq 0 ]; then
-        export PS1="${str} \u\[${BLUE}\]@\h:\[${NONE}\] \w \\\$ "
+        export PS1="${str} \[${RED}\]\u\[${NONE}\]@\[${BLUE}\]\h\[${NONE}\]: \w \\\$ "
     else
-        export PS1="${str} \u@\h: \w \\\$ "
+        export PS1="${str} \[${GREEN}\]\u@\h\[${NONE}\]: \[${BLUE}\]\w\[${NONE}\] \\\$ "
     fi
 }
