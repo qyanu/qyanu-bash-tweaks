@@ -1,11 +1,41 @@
+SHELL := /bin/bash
+PACKAGE := qyanu-bash-tweaks
+VERSION := $(shell cat $(CURDIR)/VERSION)
+CURRENT_COMMIT_DATE = $(shell git show --format="%cI" --no-patch HEAD)
 
 default:
-	echo "use \`make install\` to install qyanu bash tweaks"
+	@echo "available make targets:"
+	@echo
+	@echo "  dist ... make distributable files into directory dist/"
+	@echo "  package ... make distributable tar.gz"
 
-install:
-	install --mode=u=rw,og=r -T "$(CURDIR)/profile.d/qyanu-bash-aliases.sh" /etc/profile.d/qyanu-bash-aliases.sh
-	install --mode=u=rw,og=r -T "$(CURDIR)/profile.d/qyanu-bash-prompt.sh" /etc/profile.d/qyanu-bash-promp.sh
-	$(CURDIR)/edit-bashrc.sh /etc/skel/.bashrc
+clean:
+	@rm -v -Rf dist/
+	@rm -v -f $(PACKAGE)_$(VERSION).tar.bz2
 
-edit-home-bashrc:
-	$(CURDIR)/edit-bashrc.sh $(HOME)/.bashrc
+dist:	\
+		edit-bashrc.sh \
+		Makefile-dist \
+		VERSION \
+		profile.d/qyanu-bash-aliases.sh \
+		profile.d/qyanu-bash-prompt.sh \
+		;
+	@mkdir -p "dist/" "dist/profile.d/"
+	@cp Makefile-dist dist/Makefile
+	@cp -vt dist/ \
+	    edit-bashrc.sh \
+	    VERSION \
+	#
+	@cp -vt dist/profile.d \
+	    profile.d/qyanu-bash-aliases.sh \
+	    profile.d/qyanu-bash-prompt.sh \
+	#
+	@touch dist/
+
+package: dist
+	# make tar file reproducible with the following options:
+	#   sort, owner, group, numeric-owner, mtime
+	tar -C $(CURDIR) --sort=name --owner=0 --group=0 --numeric-owner \
+		--mtime "$(CURRENT_COMMIT_DATE)" \
+		-cjf $(PACKAGE)_$(VERSION).tar.bz2 \
+		dist/
