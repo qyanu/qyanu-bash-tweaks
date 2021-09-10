@@ -35,7 +35,8 @@ dist:	\
 package: dist
 	# make tar file reproducible with the following options:
 	#   sort, owner, group, numeric-owner, mtime
-	tar -C $(CURDIR) --sort=name --owner=0 --group=0 --numeric-owner \
-		--mtime "$(CURRENT_COMMIT_DATE)" \
-		-cjf $(PACKAGE)_$(VERSION).tar.bz2 \
-		dist/
+	tar -vC $(CURDIR) --sort=name --owner=0 --group=0 --numeric-owner \
+	    --mtime "$(CURRENT_COMMIT_DATE)" \
+	    --transform=s/dist/$(PACKAGE)/ \
+	    -cjf $(PACKAGE)_$(VERSION).tar.bz2 \
+	    dist/
