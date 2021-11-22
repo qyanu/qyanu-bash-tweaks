@@ -2,6 +2,7 @@
 set -eu -o pipefail
 MYDIR="$(realpath "$(dirname "$0")")"
 
+
 #
 # upload the latest package to qyanu.net/software
 #
@@ -16,7 +17,7 @@ PACKAGE=qyanu-bash-tweaks
 
 # check validity of existing checksums
 (
-    cd "$OPERATIONS_BASEDIR/source/_packages"
+    cd "$OPERATIONS_BASEDIR/source/_packages/$PACKAGE"
     gpg --decrypt SHA256SUM.signed \
         | sha256sum --check
 )
