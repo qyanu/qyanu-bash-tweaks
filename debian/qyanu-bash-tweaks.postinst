@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+
+##DEBHELPER##
+
+if [ ! -f /etc/skel/.bashrc ]; then
+    touch /etc/skel/.bashrc
+fi
+/usr/share/${DPKG_MAINTSCRIPT_PACKAGE}/edit-bashrc.sh /etc/skel/.bashrc

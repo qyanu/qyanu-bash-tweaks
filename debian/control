@@ -1,0 +1,16 @@
+Source: qyanu-bash-tweaks
+Standards-Version: 4.6.2
+Maintainer: Max-Julian Pogner <max-julian@pogner.at>
+Priority: optional
+Section: shells
+Build-Depends:
+  debhelper-compat (= 13)
+Rules-Requires-Root: binary-targets
+
+Package: qyanu-bash-tweaks
+Architecture: all
+Depends:
+  ${misc:Depends}
+Description: qyanu's personal tweaks to the interactive bash shell
+ qyanu's personal bash tweaks, such as aliases and PROMPT_COMMAND,
+ loaded through the systems /etc/profile.d facility.

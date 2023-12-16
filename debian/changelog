@@ -1,0 +1,11 @@
+qyanu-bash-tweaks (1.0.1) UNRELEASED; urgency=medium
+
+  * convert to debian package
+
+ -- Max-Julian Pogner <max-julian@pogner.at>  Sat, 16 Dec 2023 10:47:03 +0100
+
+qyanu-bash-tweaks (1.0.0) unstable; urgency=medium
+
+  * convert version 1.0.0 to debian package
+
+ -- Max-Julian Pogner <max-julian@pogner.at>  Sat, 16 Dec 2023 10:45:41 +0100

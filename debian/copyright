@@ -1,0 +1,25 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Contact: Max-Julian Pogner <max-julian@pogner.at>
+
+Files:
+ *
+Copyright: 2019-2023, Max-Julian Pogner <max-julian@pogner.at>
+License: GPL-2
+
+Files:
+ debian/*
+Copyright: 2023, Max-Julian Pogner <max-julian@pogner.at>
+License: GPL-2
+
+License: GPL-2
+ You can redistribute it and/or modify it under the terms of the GNU
+ General Public License version 2 as found in the encompanying file
+ LICENSE.
+ .
+ This program is distributed in the hope that it will be useful, but
+ WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ General Public License for more details.
+Comment:
+ On Debian systems, the full text of the GNU General Public License
+ version 2 can be found in the file '/usr/share/common-licenses/GPL-2'.
