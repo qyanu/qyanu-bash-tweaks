@@ -1,9 +1,9 @@
-qyanu-bash-tweaks (1.0.1) UNRELEASED; urgency=medium
+qyanu-bash-tweaks (1.0.1) bookworm; urgency=medium
 
   * convert to debian package
   * FIX lintian: script-not-executable [etc/profile.d/qyanu-bash-aliases.sh]
 
- -- Max-Julian Pogner <max-julian@pogner.at>  Sat, 16 Dec 2023 12:09:03 +0100
+ -- Max-Julian Pogner <max-julian@pogner.at>  Sat, 16 Dec 2023 19:37:30 +0100
 
 qyanu-bash-tweaks (1.0.0) unstable; urgency=medium
 
