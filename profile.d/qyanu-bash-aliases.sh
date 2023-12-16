@@ -1,4 +1,3 @@
-#!/bin/bash
 # some shortcuts
 test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 alias lsa="ls -alhi --color=auto"
