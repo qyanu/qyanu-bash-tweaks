@@ -1,54 +1,94 @@
 #!/bin/bash
-set -eu -o pipefail
-MYDIR="$(realpath "$(dirname "$0")")"
+##
+# upload the latest package to webpage qyanu.net/software
+##
+set -eu
+MYDIR="$(test -L "$0" \
+    && echo "$(dirname -- "$(realpath -- "$(dirname -- "$0")/$(readlink -- "$0")")")" \
+    || echo "$(realpath -- "$(dirname -- "$0")")")"
+umask 077
 
+cd "${MYDIR}/.."
 
-#
-# upload the latest package to qyanu.net/software
-#
-PACKAGE=qyanu-bash-tweaks
+PACKAGE="$(dpkg-parsechangelog -S Source)"
+VERSION="$(dpkg-parsechangelog -S Version)"
 
 
 # need variable "OPERATIONS_BASEDIR"
-# need variable "USER"
-# need variable "GROUP"
-. "$MYDIR/.env"
+. "${MYDIR}/.env"
+
+if [[ -z "${OPERATIONS_BASEDIR}" ]]; then
+    echo "need variable OPERATIONS_BASEDIR in environment or .env file!" >&2
+    exit 1
+fi
 
 
-# check validity of existing checksums
+# check that the package to upload is complete
+files=(
+    "../${PACKAGE}_${VERSION}.tar.xz"
+    "../${PACKAGE}_${VERSION}_all.deb"
+    "../${PACKAGE}_${VERSION}.dsc"
+    )
+for file in "${files[@]}"; do
+    if [[ ! -r "${file}" ]]; then
+        echo "ERROR: missing or not readable: $file" >&2
+        exit 1
+    fi
+done
+
+# and also separately sign the .deb file if not already done
+if [[ ! -f "../${PACKAGE}_${VERSION}_all.deb.sig" ]];
+then
+    gpg --detach-sign --armor \
+        --output "../${PACKAGE}_${VERSION}_all.deb.sig" \
+        "../${PACKAGE}_${VERSION}_all.deb"
+fi
+files+=("../${PACKAGE}_${VERSION}_all.deb.sig")
+
+
+# verify all the signatures against the latest set of trusted keys
+# in order to be sure that everything is in order before uploading
+# it to the qyanu.net/software homepage
+dscverify \
+    --no-default-keyrings \
+    --keyring "${HOME}/.gnupg/qyanu-net-software-trustedkeys.kbx" \
+    "../${PACKAGE}_${VERSION}_amd64.changes"
+dscverify \
+    --no-default-keyrings \
+    --keyring "${HOME}/.gnupg/qyanu-net-software-trustedkeys.kbx" \
+    "../${PACKAGE}_${VERSION}.dsc"
+# Note: check if gnupg reports a valid signature by any of the keys
+# in the set of trusted keys. this also mitigates the case, where the
+# above gpg --detach-sign 
+gpg --verify \
+    --no-default-keyring \
+    --keyring "${HOME}/.gnupg/qyanu-net-software-trustedkeys.kbx" \
+    --status-fd 1 \
+    "../${PACKAGE}_${VERSION}_all.deb.sig" \
+    "../${PACKAGE}_${VERSION}_all.deb" \
+    | grep -Pe "^\[GNUPG:\] VALIDSIG "
+
+
+
+# actually upload the files
+install --mode=a=rX,u+w \
+    --verbose \
+    -t "${OPERATIONS_BASEDIR}/source/_packages/${PACKAGE}/" \
+    "${files[@]}" \
+    #
+
+##
+# edit the html portion of the qyanu.net/software homepage in order
+# to reference now the new files
+##
 (
-    cd "$OPERATIONS_BASEDIR/source/_packages/$PACKAGE"
-    gpg --decrypt SHA256SUM.signed \
-        | sha256sum --check
+    cd "${OPERATIONS_BASEDIR}"
 )
-
-
-# add new package to webpage
-cd "$MYDIR/.."
-
-VERSION="$(<./VERSION)"
-
-
-make package
-
-install -o "$USER" -g "$GROUP" --mode=a=rX,u+w \
-    -t "$OPERATIONS_BASEDIR/source/_packages/${PACKAGE}/" \
-    "${PACKAGE}_${VERSION}.tar.bz2"
-
 (
-    cd "$OPERATIONS_BASEDIR/source/_packages/${PACKAGE}"
-    rm -f SHA256SUM SHA256SUM.signed
-    find . -type f \! -name "SHA256SUM*" -printf "%P\\0" \
-        | sort -z \
-        | xargs -0 sha256sum --binary \
-        > SHA256SUM
-    gpg --clearsign --output SHA256SUM.signed SHA256SUM
-    chown "${USER}:${GROUP}" SHA256SUM.signed SHA256SUM
-    chmod a=rX,u+w SHA256SUM.signed SHA256SUM
-)
-(
-    cd "$OPERATIONS_BASEDIR"
-    sed -re "s/${PACKAGE}_([0-9]+\.){3}/${PACKAGE}_${VERSION}./g" \
+    cd "${OPERATIONS_BASEDIR}"
+    sed -r \
+        -e "s/${PACKAGE}_([0-9]+\.){3}/${PACKAGE}_${VERSION}./g" \
+        -e "s/${PACKAGE}_([0-9]+\.){2}[0-9]+_/${PACKAGE}_${VERSION}_/g" \
         -i "source/${PACKAGE}/index.rst"
     git diff HEAD
     read -p "accept and commit changes? (Ctrl+C to abort, any key to continue)"
