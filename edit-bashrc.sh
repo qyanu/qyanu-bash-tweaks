@@ -5,9 +5,10 @@ FILETOEDIT="$1"
 
 marker="qyanu-bash-tweaks"
 
-[[ -r "$FILETOEDIT" ]] || {
+if [[ ! -r "$FILETOEDIT" ]]; then
     echo "ERROR: cannot find file to edit: $FILETOEDIT" >&2
     exit 1
+fi
 }
 
 sed -r \
