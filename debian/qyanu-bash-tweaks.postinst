@@ -3,7 +3,8 @@ set -eu
 
 ##DEBHELPER##
 
-if [ ! -f /etc/skel/.bashrc ]; then
-    touch /etc/skel/.bashrc
+if [ ! -f "${DPKG_ROOT:-}/etc/skel/.bashrc" ]; then
+    touch "${DPKG_ROOT:-}/etc/skel/.bashrc"
 fi
-/usr/share/${DPKG_MAINTSCRIPT_PACKAGE}/edit-bashrc.sh /etc/skel/.bashrc
+"${DPKG_ROOT:-}/usr/share/${DPKG_MAINTSCRIPT_PACKAGE}/edit-bashrc.sh" \
+    "${DPKG_ROOT:-}/etc/skel/.bashrc"
