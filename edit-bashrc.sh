@@ -16,6 +16,6 @@ sed -r \
 (
 echo "## BEGIN: ${marker}"
 echo . /etc/profile.d/qyanu-bash-aliases.sh
-echo . /etc/profile.d/qyanu-bash-promp.sh
+echo . /etc/profile.d/qyanu-bash-prompt.sh
 echo "## END: ${marker}"
 ) | tee -a "$FILETOEDIT"

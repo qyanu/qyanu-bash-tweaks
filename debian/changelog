@@ -1,3 +1,9 @@
+qyanu-bash-tweaks (1.0.2) UNRELEASED; urgency=medium
+
+  * FIX: typo in edit-bashrc makes bashrc not loading prompt
+
+ -- Max-Julian Pogner <max-julian@pogner.at>  Wed, 24 Jul 2024 21:37:42 +0200
+
 qyanu-bash-tweaks (1.0.1) bookworm; urgency=medium
 
   * convert to debian package
