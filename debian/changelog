@@ -1,3 +1,9 @@
+qyanu-bash-tweaks (1.1.0+trixie.1) UNRELEASED; urgency=medium
+
+  * convert to trixie
+
+ -- Max-Julian Pogner <max-julian@pogner.at>  Sun, 28 Dec 2025 16:21:22 +0100
+
 qyanu-bash-tweaks (1.1.0) bookworm; urgency=medium
 
   * FIX: typo in edit-bashrc makes bashrc not loading prompt
