@@ -11,7 +11,8 @@ fi
 
 # loop through all existing user bashrc files, and if they currently
 # use qyanu-bash-tweaks then update their respective marked section.
-while read homedir_value;
+getent passwd | cut -d ":" -f 6 | sort -u | \
+while IFS= read -r homedir_value;
 do
     homedir="${DPKG_ROOT:-}${homedir_value}"
     if [ ! -d "${homedir}" ]; then
@@ -26,5 +27,4 @@ do
     fi
     "${DPKG_ROOT:-}/usr/share/${DPKG_MAINTSCRIPT_PACKAGE}/edit-bashrc.sh" \
         "${filetoedit}"
-done \
-    < <(getent passwd | cut -d ":" -f 6 | sort -u)
+done
