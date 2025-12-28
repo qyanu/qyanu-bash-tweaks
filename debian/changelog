@@ -1,8 +1,8 @@
-qyanu-bash-tweaks (1.1.1) UNRELEASED; urgency=medium
+qyanu-bash-tweaks (1.1.1) trixie; urgency=medium
 
   * FIX: postinst: use of bashism in posix/dash script
 
- -- Max-Julian Pogner <max-julian@pogner.at>  Sun, 28 Dec 2025 17:01:15 +0100
+ -- Max-Julian Pogner <max-julian@pogner.at>  Sun, 28 Dec 2025 17:16:15 +0100
 
 qyanu-bash-tweaks (1.1.0+trixie.1) trixie; urgency=medium
 
