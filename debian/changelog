@@ -1,10 +1,11 @@
-qyanu-bash-tweaks (1.1.0) UNRELEASED; urgency=medium
+qyanu-bash-tweaks (1.1.0) bookworm; urgency=medium
 
   * FIX: typo in edit-bashrc makes bashrc not loading prompt
   * d/: use DPKG_ROOT in postinst
   * d/: update all bashrc using qyanu-bash-tweaks in postinst
+  * release 1.1.0
 
- -- Max-Julian Pogner <max-julian@pogner.at>  Wed, 24 Jul 2024 21:37:42 +0200
+ -- Max-Julian Pogner <max-julian@pogner.at>  Sun, 28 Dec 2025 16:14:42 +0100
 
 qyanu-bash-tweaks (1.0.1) bookworm; urgency=medium
 
