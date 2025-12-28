@@ -1,6 +1,7 @@
 qyanu-bash-tweaks (1.1.0+trixie.1) UNRELEASED; urgency=medium
 
   * convert to trixie
+  * bump debian policy version to 4.7.3 (no change required)
 
  -- Max-Julian Pogner <max-julian@pogner.at>  Sun, 28 Dec 2025 16:21:22 +0100
 
