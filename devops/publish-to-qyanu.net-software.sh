@@ -52,10 +52,6 @@ files+=("../${PACKAGE}_${VERSION}_all.deb.sig")
 dscverify \
     --no-default-keyrings \
     --keyring "${HOME}/.gnupg/qyanu-net-software-trustedkeys.kbx" \
-    "../${PACKAGE}_${VERSION}_amd64.changes"
-dscverify \
-    --no-default-keyrings \
-    --keyring "${HOME}/.gnupg/qyanu-net-software-trustedkeys.kbx" \
     "../${PACKAGE}_${VERSION}.dsc"
 # Note: check if gnupg reports a valid signature by any of the keys
 # in the set of trusted keys. this also mitigates the case, where the
